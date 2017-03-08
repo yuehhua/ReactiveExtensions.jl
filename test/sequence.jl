@@ -31,3 +31,11 @@ t = from(a)(map, x -> x*2)
 a = [1, 2, 3, 4, 5]
 t = from(a)(map, x -> x+5)(map, x -> x*2)
 @test to_list(t) == [12, 14, 16, 18, 20]
+
+#
+# subscribe
+#
+
+# @test from([1, 2, 3, 4, 5])(map, x -> x + 2)(subscribe, to_list)
+# @test from([1, 2, 3, 4, 5])(filter, x -> x > 2)(subscribe, to_set)
+# @test from([1, 2, 3, 4, 5])(reduce, (x, y) -> x + y)(subscribe)
