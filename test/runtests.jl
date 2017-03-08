@@ -1,5 +1,14 @@
 using ReactiveExtensions
 using Base.Test
 
-# write your own tests here
-@test 1 == 2
+tests = ["subject",
+         "chaining",
+         "sequence",
+         ]
+
+println("Running tests:")
+
+for t in tests
+    println(" * $(t)")
+    include("$(t).jl")
+end
