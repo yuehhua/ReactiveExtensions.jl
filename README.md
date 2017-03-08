@@ -6,12 +6,12 @@
 
 Implementation of reactive extensions for Julia.
 
-I just implement the core functionality of Rx, and need community support.
+I just implement the core functionality of ReactiveExtensions, and need community support.
 
 ## Installation
 
 ```
-Pkg.add("Rx")
+Pkg.add("ReactiveExtensions")
 ```
 
 ## Usage
