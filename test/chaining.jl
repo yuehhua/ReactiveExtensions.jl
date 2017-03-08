@@ -35,12 +35,25 @@ t5 = init_task(bridge, t3, t4)
 @test consume(t5, Subject(5)) == Subject(20)
 
 #
-# Broadcast
+# broadcast
 #
 
-parallel = [x -> x+2, x -> x*2, x -> x+2, x -> x*2, x -> x+2, x -> x*2]
-answer = [Subject(13), Subject(22), Subject(13), Subject(22), Subject(13), Subject(22)]
+parallel = [x -> x+2, x -> x*2, x -> x+2,
+            x -> x*2, x -> x+2, x -> x*2]
+answer = [Subject(13), Subject(22), Subject(13),
+          Subject(22), Subject(13), Subject(22)]
 t = init_task(bridge, x -> x+1, parallel)
+@test consume(t, Subject(10)) == answer
+
+#
+# join
+#
+
+parallel = [x -> x+2, x -> x*2, x -> x+2,
+            x -> x*2, x -> x+2, x -> x*2]
+answer = Subject(96)
+t = init_task(bridge, parallel,
+              (x1, x2, x3, x4, x5, x6) -> x1 + x2 + x3 + x4 + x5 + x6)
 @test consume(t, Subject(10)) == answer
 
 #

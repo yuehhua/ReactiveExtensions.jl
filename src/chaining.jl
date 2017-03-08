@@ -55,24 +55,6 @@ function bridge(f::Task, g::Task)
     end
 end
 
-function bridge(f::Task, gs::Vector{Task})
-    x = produce()
-    while true
-        y = consume(f, x)
-        zs = [consume(g, y) for g in gs]
-        x = produce(zs)
-    end
-end
-
-function bridge(fs::Vector{Task}, g::Task)
-    x = produce()
-    while true
-        ys = [consume(f, x) for f in fs]
-        z = consume(g, ys)
-        x = produce(z)
-    end
-end
-
 function bridge(f::Function, g::Task)
     a = init_task(map, f)
     return bridge(a, g)
@@ -83,21 +65,45 @@ function bridge(f::Task, g::Function)
     return bridge(f, b)
 end
 
-function bridge(f::Task, gs::Vector{Function})
-    bs = [init_task(map, g) for g in gs]
-    return bridge(f, bs)
-end
-
 function bridge(f::Function, g::Function)
     a = init_task(map, f)
     b = init_task(map, g)
     return bridge(a, b)
 end
 
+doc"""
+broadcast or bridge a function to parallel functions
+"""
+function bridge(f::Task, gs::Vector{Task})
+    x = produce()
+    while true
+        y = consume(f, x)
+        zs = [consume(g, y) for g in gs]
+        x = produce(zs)
+    end
+end
+
+function bridge(f::Task, gs::Vector{Function})
+    bs = [init_task(map, g) for g in gs]
+    return bridge(f, bs)
+end
+
 function bridge(f::Function, gs::Vector{Function})
     a = init_task(map, f)
     bs = [init_task(map, g) for g in gs]
     return bridge(a, bs)
+end
+
+doc"""
+bridge parallel functions to a function
+"""
+function bridge(fs::Vector{Task}, g::Task)
+    x = produce()
+    while true
+        ys = [consume(f, x) for f in fs]
+        z = consume(g, ys...)
+        x = produce(z)
+    end
 end
 
 function bridge(fs::Vector{Function}, g::Function)
