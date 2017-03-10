@@ -1,7 +1,7 @@
 __precompile__(true)
 
 module ReactiveExtensions
-    import Base: get, map, filter, reduce
+    import Base: get, reduce
 
     export
 
@@ -15,8 +15,8 @@ module ReactiveExtensions
     _reduce,
 
     # chaining
-    map,
-    filter,
+    map_,
+    filter_,
     reduce,
     bridge,
 

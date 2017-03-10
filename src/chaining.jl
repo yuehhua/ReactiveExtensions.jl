@@ -1,7 +1,7 @@
 doc"""
 yield result of `f(x)`
 """
-function map(f::Function; debug=false)
+function map_(f::Function; debug=false)
     x = produce()
     while x != :done
         y = _map(x, f)
@@ -16,7 +16,7 @@ end
 doc"""
 yield x if f(x) is true
 """
-function filter(f::Function; debug=false)
+function filter_(f::Function; debug=false)
     x = produce()
     while x != :done
         y = _filter(x, f)
@@ -74,35 +74,35 @@ function bridge(fs::Vector{Task}, g::Task)
 end
 
 function bridge(f::Function, g::Task)
-    a = init_task(map, f)
+    a = init_task(map_, f)
     return bridge(a, g)
 end
 
 function bridge(f::Task, g::Function)
-    b = init_task(map, g)
+    b = init_task(map_, g)
     return bridge(f, b)
 end
 
 function bridge(f::Task, gs::Vector{Function})
-    bs = [init_task(map, g) for g in gs]
+    bs = [init_task(map_, g) for g in gs]
     return bridge(f, bs)
 end
 
 function bridge(f::Function, g::Function)
-    a = init_task(map, f)
-    b = init_task(map, g)
+    a = init_task(map_, f)
+    b = init_task(map_, g)
     return bridge(a, b)
 end
 
 function bridge(f::Function, gs::Vector{Function})
-    a = init_task(map, f)
-    bs = [init_task(map, g) for g in gs]
+    a = init_task(map_, f)
+    bs = [init_task(map_, g) for g in gs]
     return bridge(a, bs)
 end
 
 function bridge(fs::Vector{Function}, g::Function)
-    as = [init_task(map, f) for f in fs]
-    b = init_task(map, g)
+    as = [init_task(map_, f) for f in fs]
+    b = init_task(map_, g)
     return bridge(as, b)
 end
 
@@ -113,5 +113,5 @@ function bridge(f::Task, gs::Vararg)
 end
 
 function bridge(f::Function, gs::Vararg)
-    return bridge(init_task(map, f), gs...)
+    return bridge(init_task(map_, f), gs...)
 end

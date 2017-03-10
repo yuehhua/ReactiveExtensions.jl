@@ -15,7 +15,7 @@ t = from(a)
 # map, filter and reduce
 #
 
-t = from(a)(map, x -> x*2)
+t = from(a)(map_, x -> x*2)
 @test consume(t.chain) == Subject(2)
 @test consume(t.chain) == Subject(4)
 @test consume(t.chain) == Subject(6)
@@ -29,5 +29,5 @@ t = from(a)(map, x -> x*2)
 #
 
 a = [1, 2, 3, 4, 5]
-t = from(a)(map, x -> x+5)(map, x -> x*2)
+t = from(a)(map_, x -> x+5)(map_, x -> x*2)
 @test to_list(t) == [12, 14, 16, 18, 20]

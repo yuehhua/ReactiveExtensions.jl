@@ -18,7 +18,7 @@ Pkg.add("ReactiveExtensions")
 
 ```
 a = [1, 2, 3, 4, 5]
-t = from(a)(map, x -> x+5)(map, x -> x*2)
+t = from(a)(map_, x -> x+5)(map_, x -> x*2)
 to_list(t)  # [12, 14, 16, 18, 20]
 ```
 
@@ -26,8 +26,8 @@ This script shows applying list `a` by adding 5 and then multiplying 2.
 
 ## Functions
 
-* map
-* filter
+* map_
+* filter_
 * reduce
 
 ## Subscribe
