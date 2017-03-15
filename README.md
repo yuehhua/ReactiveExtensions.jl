@@ -4,6 +4,8 @@
 
 -----
 
+## This project will become new features to [Reactive.jl](https://github.com/JuliaGizmos/Reactive.jl), and this project is no longer maintained.
+
 Implementation of reactive extensions for Julia.
 
 I just implement the core functionality of ReactiveExtensions, and need community support.
